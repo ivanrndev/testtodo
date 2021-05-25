@@ -9,6 +9,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ToDoList from './src/screens/ToDoList';
 import FindToDo from './src/screens/FindToDo';
 import Registration from './src/screens/Registration';
+import VerificationRegistration from './src/screens/VerificationRegistration';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -18,9 +19,10 @@ function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen name="ToDoList" component={ToDoList} />
-          <Tab.Screen name="FindToDo" component={FindToDo} />
-          <Tab.Screen name="Registration" component={Registration} />
+          <Tab.Screen name="ToDoList" component={ToDoList}/>
+          <Tab.Screen name="FindToDo" component={FindToDo}/>
+          <Tab.Screen name="Registration" component={Registration}/>
+          <Tab.Screen name="VerificationRegistration" component={VerificationRegistration} />
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>

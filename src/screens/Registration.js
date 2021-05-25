@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 const Registration = () => {
-  const [logInput, setLogInput] = useState();
+  const [logInput, setLogInput] = useState([]);
   const [pasInput, setPasInput] = useState();
 
   return (
@@ -23,9 +23,21 @@ const Registration = () => {
       </View>
       <View style={styles.registrWrap}>
         <Text style={styles.title}>Вход</Text>
-        <TextInput style={styles.registrInput} value={logInput} onChangeText={setLogInput} placeholder="Номер телефона" />
-        {}
-        <TextInput style={styles.registrInput} value={pasInput} onChangeText={setPasInput} placeholder="Пароль" />
+        <TextInput
+          style={styles.registrInput}
+          value={logInput}
+          onChangeText={setLogInput}
+          placeholder="Номер телефона"
+        />
+        {logInput.length !== 12 ? (
+          <Text style={{color: 'red'}}>Не правильный номер</Text>
+        ) : null}
+        <TextInput
+          style={styles.registrInput}
+          value={pasInput}
+          onChangeText={setPasInput}
+          placeholder="Пароль"
+        />
         <TouchableOpacity style={styles.signInButton}>
           <Text style={styles.text}>Войти</Text>
         </TouchableOpacity>
@@ -61,7 +73,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   imageText: {
-    fontWeight: '500',
+    fontWeight: '800',
     fontSize: 35,
   },
   registrWrap: {},
