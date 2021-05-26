@@ -1,5 +1,11 @@
 import React from 'react';
-import {StyleSheet, View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 
 const VerificationRegistration = () => {
   return (
@@ -11,9 +17,12 @@ const VerificationRegistration = () => {
         <View style={styles.topWrap}>
           <View style={styles.inputWrap}>
             <Text style={styles.title}>Изменить пароль</Text>
-            <Text style={styles.text}>Придумайте новый пароль и повторите его. После этого войдите в систему заново.</Text>
-            <TextInput style={styles.input} placeholder='Пароль'/>
-            <TextInput style={styles.input} placeholder='Повторите пароль'/>
+            <Text style={styles.text}>
+              Придумайте новый пароль и повторите его. После этого войдите в
+              систему заново.
+            </Text>
+            <TextInput style={styles.input} placeholder="Пароль" />
+            <TextInput style={styles.input} placeholder="Повторите пароль" />
           </View>
         </View>
         <TouchableOpacity style={styles.button}>
@@ -21,19 +30,6 @@ const VerificationRegistration = () => {
         </TouchableOpacity>
       </View>
     </View>
-    // <View style={{ flex: 1}}>
-    //   <View style={{ backgroundColor: 'red', height: 100, alignItems: 'center', justifyContent: 'center'}}>
-    //     <Text>header</Text>
-    //   </View>
-    //   <View style={{ flex: 1, backgroundColor: 'blue', marginHorizontal: 20}}>
-    //     <View style={{ flex: 1 }}>
-    //       <Text>content</Text>
-    //     </View>
-    //     <TouchableOpacity style={{ backgroundColor: 'grey'}}>
-    //       <Text>button</Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </View>
   );
 };
 
@@ -87,6 +83,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     borderRadius: 20,
     fontSize: 20,
+    paddingLeft: 30,
   },
   buttonText: {
     color: 'white',
@@ -97,7 +94,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 70,
-    // width: '100%',
     backgroundColor: '#141A1C',
     borderRadius: 20,
     marginBottom: 20,
