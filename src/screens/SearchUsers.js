@@ -98,9 +98,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
-  inputWrap: {
-    width: '100%',
-  },
+  inputWrap: {},
   text: {
     textAlign: 'center',
     fontSize: 18,
@@ -108,6 +106,7 @@ const styles = StyleSheet.create({
     color: '#4F4F4F',
   },
   input: {
+    width: '100%',
     height: 70,
     borderWidth: 1,
     marginTop: 30,
@@ -118,6 +117,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
     height: 70,
     backgroundColor: '#141A1C',
     borderRadius: 20,

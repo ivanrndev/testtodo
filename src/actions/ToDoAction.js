@@ -1,5 +1,7 @@
 import ActionTypes from './index';
 
+export const ff = () => ({ type: 'metype'})
+
 export const addToDo = title => ({
   type: ActionTypes.ADD_TODO,
   payload: title,

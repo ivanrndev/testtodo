@@ -6,11 +6,50 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
+import ActionTypes from '../sagas';
 
 const Registration = () => {
-  const [logInput, setLogInput] = useState([]);
-  const [pasInput, setPasInput] = useState();
+  const dispatch = useDispatch();
+  // Input log/pas
+  const [logInput, setLogInput] = useState('');
+  const [pasInput, setPasInput] = useState('');
+
+  // Server response
+  const [servResp, setServResp] = useState();
+
+  // Modal screen
+  const [isModal, setIsModal] = useState(false);
+
+  const validation = (AStr) => {
+    AStr = AStr.replace(/[\s\-\(\)]/g, '');
+    return AStr.match(/^((\+?3)?8)?0\d{9}$/) != null;
+  };
+
+  const autorizationUser = async () => {
+    // setIsModal(!isModal);
+    // try {
+    //   let response = await fetch('https://dev.campanile.com.ua/api/v1/courier/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       'phone': `${logInput}`,
+    //       'password': `${pasInput}`,
+    //     }),
+    //   });
+    //   let json = await response.json();
+    //   setServResp(json);
+    // } catch (error) {
+    //   console.error(error);
+    // } finally {
+    //   setIsModal(!isModal);
+    // }
+  };
 
   return (
     <View style={styles.wrap}>
@@ -29,7 +68,7 @@ const Registration = () => {
           onChangeText={setLogInput}
           placeholder="Номер телефона"
         />
-        {logInput.length !== 12 ? (
+        {logInput.length !== 13 ? (
           <Text style={{color: 'red'}}>Не правильный номер</Text>
         ) : null}
         <TextInput
@@ -38,7 +77,19 @@ const Registration = () => {
           onChangeText={setPasInput}
           placeholder="Пароль"
         />
-        <TouchableOpacity style={styles.signInButton}>
+        {pasInput.length < 6 ? (
+          <Text style={{color: 'red'}}>Не соответствующий пароль</Text>
+        ) : null}
+        <TouchableOpacity
+          style={styles.signInButton}
+          onPress={() => {
+            dispatch({type: ActionTypes.AUTORIZATION});
+            if (validation(logInput, pasInput)) {
+              // autorizationUser()
+
+            }
+          }}
+        >
           <Text style={styles.text}>Войти</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.helpButton}>
@@ -48,6 +99,9 @@ const Registration = () => {
       <TouchableOpacity style={styles.signUpButton}>
         <Text style={styles.text}>Регистрация</Text>
       </TouchableOpacity>
+      <Modal style={styles.modalWindow} visible={isModal} presentationStyle='fullScreen' animationType="slide">
+        <ActivityIndicator style={styles.spinner} size="large" color="#141A1C"/>
+      </Modal>
     </View>
   );
 };
@@ -55,9 +109,10 @@ const Registration = () => {
 const styles = StyleSheet.create({
   wrap: {
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   imageWrap: {
-    marginTop: 70,
+    marginTop: 50,
   },
   image: {
     height: 200,
@@ -76,7 +131,9 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     fontSize: 35,
   },
-  registrWrap: {},
+  registrWrap: {
+    width: '100%',
+  },
   title: {
     fontSize: 30,
     fontWeight: '500',
@@ -84,15 +141,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   registrInput: {
-    width: 370,
+    width: '100%',
     height: 55,
     borderWidth: 1,
     borderRadius: 10,
     marginTop: 35,
     fontSize: 20,
+    paddingLeft: 20,
   },
   signInButton: {
-    width: 370,
+    width: '100%',
     height: 55,
     backgroundColor: '#141A1C',
     borderRadius: 10,
@@ -101,16 +159,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   signUpButton: {
-    width: 370,
+    width: '100%',
     height: 55,
     backgroundColor: '#989BD2',
     borderRadius: 10,
-    marginTop: 50,
+    marginTop: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   helpButton: {
-    width: 370,
+    width: '100%',
     height: 55,
     marginTop: 20,
     alignItems: 'center',
@@ -125,6 +183,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     textDecorationLine: 'underline',
+  },
+  modalWindow: {
+    backgroundColor: '#000000',
+    opacity: 0.25,
+  },
+  spinner: {
+    marginVertical: '100%',
   },
 });
 
