@@ -1,6 +1,4 @@
-import ActionTypes from './index';
-
-export const ff = () => ({ type: 'metype'})
+import ActionTypes from '../utils/constants';
 
 export const addToDo = title => ({
   type: ActionTypes.ADD_TODO,
@@ -24,8 +22,6 @@ export const checkToDo = index => ({
   type: ActionTypes.CHECK_TODO,
   payload: index,
 });
-
-
 
 export const findToDo = title => ({
   type: ActionTypes.FIND_TODO,

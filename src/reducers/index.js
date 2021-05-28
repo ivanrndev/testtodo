@@ -3,14 +3,14 @@ import {combineReducers} from 'redux';
 import {createStore} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {ToDoReducer} from './ToDoReducer';
-import rootSagas from '../sagas/rootSagas';
+import {rootSagas} from '../sagas';
+import {UserReducer} from './userReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 const rootReducer = combineReducers({
   todoReducer: ToDoReducer,
+  UserReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));

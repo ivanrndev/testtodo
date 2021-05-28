@@ -1,0 +1,19 @@
+export default {
+  // ToDo Actions
+  ADD_TODO: 'ADD_TODO',
+  DEL_TODO: 'DEL_TODO',
+  CREATE_TODO: 'CREATE_TODO',
+  CHECK_TODO: 'CHECK_TODO',
+
+  FIND_TODO: 'FIND_TODO',
+
+  // Users Saga Actions
+  AUTORIZATION: 'AUTORIZATION',
+
+  // Users Redux Actions
+  LOADING: 'LOADING',
+  ADD_USERS_INFO: 'ADD_USERS_INFO',
+  ISAUTORIZATED: 'ISAUTORIZATED',
+  LOG_OUT: 'LOG_OUT',
+  ERROR_TEXT: 'ERROR_TEXT',
+};

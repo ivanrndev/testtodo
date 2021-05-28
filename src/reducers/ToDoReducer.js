@@ -1,4 +1,4 @@
-import ActionTypes from '../actions/index';
+import ActionTypes from '../utils/constants';
 
 const DefaultState = {
   items: [],

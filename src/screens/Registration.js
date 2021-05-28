@@ -9,8 +9,10 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
-import ActionTypes from '../sagas';
+import {useDispatch, useSelector} from 'react-redux';
+import ActionTypes from '../utils/constants';
+import {UserReducer} from '../reducers/userReducer';
+import {loading, autorizate, logOut} from '../actions/userActions';
 
 const Registration = () => {
   const dispatch = useDispatch();
@@ -18,37 +20,20 @@ const Registration = () => {
   const [logInput, setLogInput] = useState('');
   const [pasInput, setPasInput] = useState('');
 
-  // Server response
-  const [servResp, setServResp] = useState();
+  // Input Validation
+  const [logValidation, setLogValidation] = useState(true);
+  const [pasValidation, setPasValidation] = useState(true);
 
   // Modal screen
   const [isModal, setIsModal] = useState(false);
 
-  const validation = (AStr) => {
+  // Selector
+  const user = useSelector(state => state.UserReducer);
+  console.log('user', user);
+
+  const validation = AStr => {
     AStr = AStr.replace(/[\s\-\(\)]/g, '');
     return AStr.match(/^((\+?3)?8)?0\d{9}$/) != null;
-  };
-
-  const autorizationUser = async () => {
-    // setIsModal(!isModal);
-    // try {
-    //   let response = await fetch('https://dev.campanile.com.ua/api/v1/courier/login', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       'phone': `${logInput}`,
-    //       'password': `${pasInput}`,
-    //     }),
-    //   });
-    //   let json = await response.json();
-    //   setServResp(json);
-    // } catch (error) {
-    //   console.error(error);
-    // } finally {
-    //   setIsModal(!isModal);
-    // }
   };
 
   return (
@@ -68,7 +53,7 @@ const Registration = () => {
           onChangeText={setLogInput}
           placeholder="Номер телефона"
         />
-        {logInput.length !== 13 ? (
+        {!logValidation ? (
           <Text style={{color: 'red'}}>Не правильный номер</Text>
         ) : null}
         <TextInput
@@ -77,19 +62,24 @@ const Registration = () => {
           onChangeText={setPasInput}
           placeholder="Пароль"
         />
-        {pasInput.length < 6 ? (
+        {!pasValidation ? (
           <Text style={{color: 'red'}}>Не соответствующий пароль</Text>
         ) : null}
+        {user.errorText ? <Text>{user.errorText}</Text> : null}
         <TouchableOpacity
           style={styles.signInButton}
           onPress={() => {
-            dispatch({type: ActionTypes.AUTORIZATION});
-            if (validation(logInput, pasInput)) {
-              // autorizationUser()
-
+            if (validation(logInput)) {
+              dispatch(loading());
+              dispatch({
+                type: ActionTypes.AUTORIZATION,
+                data: {logInput, pasInput},
+              });
+            } else {
+              setLogValidation(false);
+              setPasValidation(false);
             }
-          }}
-        >
+          }}>
           <Text style={styles.text}>Войти</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.helpButton}>
@@ -99,9 +89,28 @@ const Registration = () => {
       <TouchableOpacity style={styles.signUpButton}>
         <Text style={styles.text}>Регистрация</Text>
       </TouchableOpacity>
-      <Modal style={styles.modalWindow} visible={isModal} presentationStyle='fullScreen' animationType="slide">
-        <ActivityIndicator style={styles.spinner} size="large" color="#141A1C"/>
-      </Modal>
+      <TouchableOpacity
+        onPress={() => {
+          dispatch(loading());
+          dispatch({
+            type: ActionTypes.LOG_OUT,
+          });
+        }}>
+        <Text>log out</Text>
+      </TouchableOpacity>
+      {
+        <Modal
+          style={styles.modalWindow}
+          visible={user.userLoading}
+          presentationStyle="fullScreen"
+          animationType="slide">
+          <ActivityIndicator
+            style={styles.spinner}
+            size="large"
+            color="#141A1C"
+          />
+        </Modal>
+      }
     </View>
   );
 };
